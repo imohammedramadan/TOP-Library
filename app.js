@@ -41,7 +41,7 @@ function Book(bookId, title, author, pages, status) {
 }
 
 function generateId() {
-  return `${myLibrary.length + 1}`;
+  return `${Number(myLibrary[myLibrary.length - 1].bookId) + 1}`;
 }
 
 function addBookToLibrary() {
@@ -88,7 +88,6 @@ function displayBooks() {
 }
 
 function deleteBook() {
-  myLibrary.findIndex((book) => book.bookId == "3");
   bookDisplay.addEventListener("click", (e) => {
     if (e.target.classList.contains("delete-btn")) {
       const card = e.target.parentNode.parentNode.parentNode;
