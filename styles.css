@@ -161,3 +161,36 @@ input {
   color: #1f1f1f;
   outline: 2px solid #1f1f1f;
 }
+
+/**************************/
+/* BELOW 960px (Tablets) */
+/**************************/
+@media (max-width: 960px) {
+  .display-cards {
+    grid-template-columns: repeat(2, minmax(300px, 1fr));
+    grid-template-columns: repeat(2, minmax(300px, 1fr));
+  }
+}
+
+/**************************/
+/* BELOW 700px (Smaller tablets) */
+/**************************/
+@media (max-width: 700px) {
+  .display-cards {
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+  }
+}
+
+/**************************/
+/* BELOW 620px (Phones) */
+/**************************/
+@media (max-width: 620px) {
+  main {
+    padding: 20px 10vw;
+  }
+  .display-cards {
+    grid-template-columns: minmax(260px, 1fr);
+    grid-template-columns: minmax(260px, 1fr);
+  }
+}
