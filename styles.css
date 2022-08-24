@@ -128,7 +128,8 @@ input {
   outline: 2px solid rgb(226, 226, 226);
 }
 
-.card p {
+.card p,
+.card span {
   color: rgb(226, 226, 226);
 }
 .card-title {
@@ -136,7 +137,7 @@ input {
 }
 .card-author,
 .card-pages,
-.card-status {
+.card-status span {
   font-size: 18px;
 }
 

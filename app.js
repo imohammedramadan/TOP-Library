@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   addBookToLibrary();
   displayBooks();
   deleteBook();
+  changeCardStatus();
 });
 
 const myLibrary = [
@@ -68,7 +69,7 @@ function createBookCard(book) {
   bookCard.innerHTML = `<div class="card-title"><p>${book.title}</p></div>
     <div class="card-author"><p>Author: ${book.author}</p></div>
     <div class="card-pages"><p>Pages: ${book.pages}</p></div>
-    <div class="card-status"><p>Status: ${book.status}</p></div>
+    <div class="card-status"><p>Status: <span>${book.status}</span></p></div>
     <div class="control-btns">
     <div>
     <button type="button" class="status-btn">Change Status</button>
@@ -102,4 +103,26 @@ function deleteBook() {
 function deleteBookFromArray(bookId) {
   const bookIndex = myLibrary.findIndex((book) => book.bookId == bookId);
   myLibrary.splice(bookIndex, 1);
+}
+
+function changeCardStatus() {
+  bookDisplay.addEventListener("click", (e) => {
+    if (e.target.classList.contains("status-btn")) {
+      const card = e.target.parentNode.parentNode.parentNode;
+      const cardStatus = card.querySelector(".card-status span");
+      const dataId = card.getAttribute("data-id");
+
+      if (cardStatus.textContent === "Read") {
+        cardStatus.textContent = "Not Read";
+      } else {
+        cardStatus.textContent = "Read";
+      }
+      changeBookStatus(dataId, cardStatus.textContent);
+    }
+  });
+}
+
+function changeBookStatus(bookId, newStatus) {
+  const bookIndex = myLibrary.findIndex((book) => book.bookId == bookId);
+  myLibrary[bookIndex].status = newStatus;
 }
