@@ -124,7 +124,7 @@ input {
 }
 
 .card:hover {
-  transform: scale(1.2);
+  transform: scale(1.06);
   outline: 2px solid rgb(226, 226, 226);
 }
 
