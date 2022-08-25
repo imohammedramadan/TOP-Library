@@ -11,21 +11,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const myLibrary = [
   {
-    bookId: "1",
+    bookId: 1,
     title: "The Witcher: Blood of Elves",
     author: "Andrzej Sapkowski",
     pages: "398",
     status: "Read",
   },
   {
-    bookId: "2",
+    bookId: 2,
     title: "The Witcher: The Time of Contempt",
     author: "Andrzej Sapkowski",
     pages: "331",
     status: "Not Read",
   },
   {
-    bookId: "3",
+    bookId: 3,
     title: "The Witcher: Baptism of Fire",
     author: "Andrzej Sapkowski",
     pages: "349",
@@ -42,7 +42,9 @@ function Book(bookId, title, author, pages, status) {
 }
 
 function generateId() {
-  return `${Number(myLibrary[myLibrary.length - 1].bookId) + 1}`;
+  return myLibrary.length === 0
+    ? 1
+    : myLibrary[myLibrary.length - 1].bookId + 1;
 }
 
 function addBookToLibrary() {
