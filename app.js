@@ -1,12 +1,14 @@
 "use strict";
 
 const bookDisplay = document.querySelector(".display-cards");
+const cardModal = document.querySelector(".modal");
 
 document.addEventListener("DOMContentLoaded", () => {
   addBookToLibrary();
   displayBooks();
   deleteBook();
   changeCardStatus();
+  handleBookEdit();
 });
 
 const myLibrary = [
@@ -14,21 +16,21 @@ const myLibrary = [
     bookId: 1,
     title: "The Witcher: Blood of Elves",
     author: "Andrzej Sapkowski",
-    pages: "398",
+    pages: 398,
     status: "Read",
   },
   {
     bookId: 2,
     title: "The Witcher: The Time of Contempt",
     author: "Andrzej Sapkowski",
-    pages: "331",
+    pages: 331,
     status: "Not Read",
   },
   {
     bookId: 3,
     title: "The Witcher: Baptism of Fire",
     author: "Andrzej Sapkowski",
-    pages: "349",
+    pages: 349,
     status: "Read",
   },
 ];
@@ -75,6 +77,9 @@ function createBookCard(book) {
     <div class="control-btns">
     <div>
     <button type="button" class="status-btn">Change Status</button>
+    </div>
+    <div>
+    <button type="button" class="edit-btn">Edit</button>
     </div>
     <div>
     <button type="button" class="delete-btn">Delete</button>
@@ -127,4 +132,74 @@ function changeCardStatus() {
 function changeBookStatus(bookId, newStatus) {
   const bookIndex = myLibrary.findIndex((book) => book.bookId == bookId);
   myLibrary[bookIndex].status = newStatus;
+}
+
+function handleBookEdit() {
+  bookDisplay.addEventListener("click", (e) => {
+    if (e.target.classList.contains("edit-btn")) {
+      const card = e.target.parentNode.parentNode.parentNode;
+      const dataId = card.getAttribute("data-id");
+      const bookIndex = myLibrary.findIndex((book) => book.bookId == dataId);
+      const book = myLibrary[bookIndex];
+
+      cardModal.showModal();
+      showModalInputs(book);
+      exitModal();
+      editBookInLibrary(book);
+    }
+  });
+}
+
+function showModalInputs(book) {
+  const modalTitle = document.querySelector("#modal-book-title");
+  const modalAuthor = document.querySelector("#modal-book-author");
+  const modalPages = document.querySelector("#modal-book-pages");
+  const modalStatus = document.querySelector(
+    `#modal-book-status option[value="${book.status}"]`
+  );
+
+  modalTitle.setAttribute("value", book.title);
+  modalAuthor.setAttribute("value", book.author);
+  modalPages.setAttribute("value", book.pages);
+  modalStatus.setAttribute("selected", "");
+}
+
+function editBookInLibrary(book) {
+  const editForm = document.querySelector(".modal form");
+
+  editForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const formData = Object.fromEntries(new FormData(e.target).entries());
+    const { title, author, pages, status } = formData;
+
+    book.title = title;
+    book.author = author;
+    book.pages = pages;
+    book.status = status;
+
+    renderEditedValues(book);
+    cardModal.close();
+    editForm.reset();
+  });
+}
+
+function renderEditedValues(book) {
+  const bookCard = document.querySelector(`.card[data-id="${book.bookId}"]`);
+  const bookCardTitle = bookCard.querySelector(".card-title p");
+  const bookCardAuthor = bookCard.querySelector(".card-author p");
+  const bookCardPages = bookCard.querySelector(".card-pages p");
+  const bookCardStatus = bookCard.querySelector(".card-status p span");
+
+  bookCardTitle.textContent = book.title;
+  bookCardAuthor.textContent = book.author;
+  bookCardPages.textContent = book.pages;
+  bookCardStatus.textContent = book.status;
+}
+
+function exitModal() {
+  const modalExitBtn = document.querySelector(".modal-exit");
+  modalExitBtn.addEventListener("click", () => {
+    cardModal.close();
+  });
 }

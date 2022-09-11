@@ -74,17 +74,20 @@ fieldset legend {
   align-items: center;
   flex-wrap: wrap;
 }
-.form-btn {
+.form-btn,
+.modal-form-btn {
   border: 1px solid #1f1f1f;
   padding: 5px 10px;
   background-color: white;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
-.form-btn:hover {
+.form-btn:hover,
+.modal-form-btn:hover {
   background-color: #1f1f1f;
   color: rgb(226, 226, 226);
   transform: scale(1.1);
+  border: 1px solid rgb(226, 226, 226);
 }
 
 form,
@@ -121,6 +124,7 @@ input {
   padding: 20px;
   border-radius: 14px;
   transition: all 0.2s ease-in-out;
+  justify-content: space-between;
 }
 
 .card:hover {
@@ -132,17 +136,18 @@ input {
 .card span {
   color: rgb(226, 226, 226);
 }
-.card-title {
+.card-title p {
   font-size: 22px;
 }
-.card-author,
-.card-pages,
-.card-status span {
+.card-author p,
+.card-pages p,
+.card-status p {
   font-size: 18px;
 }
 
 .control-btns {
   display: flex;
+  gap: 10px;
   justify-content: space-between;
 }
 
@@ -162,6 +167,33 @@ input {
   outline: 2px solid #1f1f1f;
 }
 
+.modal {
+  background-color: #1f1f1f;
+  border-radius: 14px;
+  border: 2px solid rgb(226, 226, 226);
+  width: 50vw;
+}
+.modal::backdrop {
+  background-color: #1f1f1f;
+  opacity: 0.5;
+}
+
+.modal .modal-form-content,
+.modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modal-btns {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.modal input {
+  width: 100%;
+}
 /**************************/
 /* BELOW 960px (Tablets) */
 /**************************/

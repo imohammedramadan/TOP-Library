@@ -69,8 +69,71 @@
         <div class="display-header"><h1>My Books</h1></div>
         <div class="display-cards"></div>
       </div>
+      <div class="card-modal">
+        <dialog class="modal">
+          <form>
+            <div class="modal-form-content">
+              <div>
+                <label class="visually-hidden" for="modal-book-title"
+                  >Title</label
+                >
+                <input
+                  type="text"
+                  id="modal-book-title"
+                  name="title"
+                  placeholder="Title"
+                  required
+                  value=""
+                />
+              </div>
+              <div>
+                <label class="visually-hidden" for="modal-book-author"
+                  >Author</label
+                >
+                <input
+                  type="text"
+                  id="modal-book-author"
+                  name="author"
+                  placeholder="Author"
+                  required
+                  value=""
+                />
+              </div>
+              <div>
+                <label class="visually-hidden" for="modal-book-pages"
+                  >Pages</label
+                >
+                <input
+                  type="number"
+                  id="modal-book-pages"
+                  name="pages"
+                  placeholder="Pages"
+                  required
+                  value=""
+                />
+              </div>
+              <div>
+                <label class="visually-hidden" for="modal-book-status"
+                  >Read Status</label
+                >
+                <select name="status" id="modal-book-status" required>
+                  <option value="">Read Status</option>
+                  <option value="Read">Read</option>
+                  <option value="Not Read">Not Read</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-btns">
+              <button class="modal-form-btn" type="submit">Done</button>
+              <button class="modal-form-btn modal-exit" type="button">
+                Exit
+              </button>
+            </div>
+          </form>
+        </dialog>
+      </div>
     </main>
 
-    <script src="./app.js"></script>
+    <script defer src="./app.js"></script>
   </body>
 </html>
