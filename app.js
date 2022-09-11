@@ -6,9 +6,7 @@ const cardModal = document.querySelector(".modal");
 document.addEventListener("DOMContentLoaded", () => {
   addBookToLibrary();
   displayBooks();
-  deleteBook();
-  changeCardStatus();
-  handleBookEdit();
+  handleCardClicks();
 });
 
 const myLibrary = [
@@ -72,20 +70,39 @@ function createBookCard(book) {
   bookCard.classList.add("card");
 
   bookCard.innerHTML = `<div class="card-title"><p>${book.title}</p></div>
-    <div class="card-author"><p>Author: ${book.author}</p></div>
-    <div class="card-pages"><p>Pages: ${book.pages}</p></div>
-    <div class="card-status"><p>Status: <span>${book.status}</span></p></div>
-    <div class="control-btns">
+  <div class="card-author"><p>Author: ${book.author}</p></div>
+  <div class="card-pages"><p>Pages: ${book.pages}</p></div>
+  <div class="card-status">
     <div>
-    <button type="button" class="status-btn">Change Status</button>
+      <p>Status: <span>${book.status}</span></p>
     </div>
     <div>
-    <button type="button" class="edit-btn">Edit</button>
+      <button type="button" class="status-btn">
+        <p class="visually-hidden">Change status</p>
+        <svg>
+          <use xlink:href="./icons/bx-revision.svg#revision" />
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div class="control-btns">
+    <div>
+      <button type="button" class="delete-btn">
+        <p class="visually-hidden">Delete</p>
+        <svg width="24px" height="24px">
+          <use xlink:href="./icons/bx-trash.svg#trash" />
+        </svg>
+      </button>
     </div>
     <div>
-    <button type="button" class="delete-btn">Delete</button>
+      <button type="button" class="edit-btn">
+        <p class="visually-hidden">Edit</p>
+        <svg width="24px" height="24px">
+          <use xlink:href="./icons/bx-edit-alt.svg#edit" />
+        </svg>
+      </button>
     </div>
-    </div>`;
+  </div>`;
 
   bookDisplay.appendChild(bookCard);
 }
@@ -96,16 +113,12 @@ function displayBooks() {
   }
 }
 
-function deleteBook() {
-  bookDisplay.addEventListener("click", (e) => {
-    if (e.target.classList.contains("delete-btn")) {
-      const card = e.target.parentNode.parentNode.parentNode;
-      const dataId = card.getAttribute("data-id");
+function deleteBook(e) {
+  const card = e.target.closest("button").parentNode.parentNode.parentNode;
+  const dataId = card.getAttribute("data-id");
 
-      card.remove();
-      deleteBookFromArray(dataId);
-    }
-  });
+  card.remove();
+  deleteBookFromArray(dataId);
 }
 
 function deleteBookFromArray(bookId) {
@@ -113,21 +126,17 @@ function deleteBookFromArray(bookId) {
   myLibrary.splice(bookIndex, 1);
 }
 
-function changeCardStatus() {
-  bookDisplay.addEventListener("click", (e) => {
-    if (e.target.classList.contains("status-btn")) {
-      const card = e.target.parentNode.parentNode.parentNode;
-      const cardStatus = card.querySelector(".card-status span");
-      const dataId = card.getAttribute("data-id");
+function changeCardStatus(e) {
+  const card = e.target.closest("button").parentNode.parentNode.parentNode;
+  const cardStatus = card.querySelector(".card-status span");
+  const dataId = card.getAttribute("data-id");
 
-      if (cardStatus.textContent === "Read") {
-        cardStatus.textContent = "Not Read";
-      } else {
-        cardStatus.textContent = "Read";
-      }
-      changeBookStatus(dataId, cardStatus.textContent);
-    }
-  });
+  if (cardStatus.textContent === "Read") {
+    cardStatus.textContent = "Not Read";
+  } else {
+    cardStatus.textContent = "Read";
+  }
+  changeBookStatus(dataId, cardStatus.textContent);
 }
 
 function changeBookStatus(bookId, newStatus) {
@@ -135,20 +144,16 @@ function changeBookStatus(bookId, newStatus) {
   myLibrary[bookIndex].status = newStatus;
 }
 
-function handleBookEdit() {
-  bookDisplay.addEventListener("click", (e) => {
-    if (e.target.classList.contains("edit-btn")) {
-      const card = e.target.parentNode.parentNode.parentNode;
-      const dataId = card.getAttribute("data-id");
-      const bookIndex = myLibrary.findIndex((book) => book.bookId == dataId);
-      const book = myLibrary[bookIndex];
+function handleBookEdit(e) {
+  const card = e.target.closest("button").parentNode.parentNode.parentNode;
+  const dataId = card.getAttribute("data-id");
+  const bookIndex = myLibrary.findIndex((book) => book.bookId == dataId);
+  const book = myLibrary[bookIndex];
 
-      cardModal.showModal();
-      showModalInputs(book);
-      exitModal();
-      editBookInLibrary(book);
-    }
-  });
+  cardModal.showModal();
+  showModalInputs(book);
+  exitModal();
+  editBookInLibrary(book);
 }
 
 function showModalInputs(book) {
@@ -200,7 +205,23 @@ function renderEditedValues(book) {
 
 function exitModal() {
   const modalExitBtn = document.querySelector(".modal-exit");
-  modalExitBtn.addEventListener("click", () => {
-    cardModal.close();
+  modalExitBtn.addEventListener("click", (e) => {
+    if (e.target.closest("button").classList.contains("modal-exit"))
+      cardModal.close();
+  });
+}
+
+function handleCardClicks() {
+  bookDisplay.addEventListener("click", (e) => {
+    if (e.target.closest("button").classList.contains("delete-btn")) {
+      //do something
+      deleteBook(e);
+    } else if (e.target.closest("button").classList.contains("status-btn")) {
+      changeCardStatus(e);
+    } else if (e.target.closest("button").classList.contains("edit-btn")) {
+      handleBookEdit(e);
+    } else {
+      //future feature
+    }
   });
 }

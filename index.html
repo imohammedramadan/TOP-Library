@@ -69,6 +69,7 @@
         <div class="display-header"><h1>My Books</h1></div>
         <div class="display-cards"></div>
       </div>
+
       <div class="card-modal">
         <dialog class="modal">
           <form>
@@ -124,9 +125,18 @@
               </div>
             </div>
             <div class="modal-btns">
-              <button class="modal-form-btn" type="submit">Done</button>
+              <button class="modal-form-btn modal-submit" type="submit">
+                <p class="visually-hidden">Done</p>
+                <svg width="24px" height="24px">
+                  <use xlink:href="./icons/bx-check.svg#check" />
+                </svg>
+              </button>
+
               <button class="modal-form-btn modal-exit" type="button">
-                Exit
+                <p class="visually-hidden">Exit</p>
+                <svg width="24px" height="24px">
+                  <use xlink:href="./icons/bx-x.svg#cross" />
+                </svg>
               </button>
             </div>
           </form>
