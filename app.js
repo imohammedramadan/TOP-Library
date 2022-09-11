@@ -61,6 +61,7 @@ function addBookToLibrary() {
 
     myLibrary.push(newBook);
     createBookCard(newBook);
+    bookForm.reset();
   });
 }
 
